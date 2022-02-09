@@ -14,12 +14,12 @@ def hello_world():  # put application's code here
     response = []
     for i in range(len(weather)):
         print()
-        sample = {}
-        sample['dt'] = weather[i]['dt']
-        sample['temprature'] = weather[i]['main']['temp']
-        sample['humidity'] = weather[i]['main']['humidity']
-        sample['description'] = weather[i]['weather'][0]['description']
-        sample['icon'] = weather[i]['weather'][0]['icon']
+        sample = {
+            'dt': weather[i]['dt'],
+            'temperature': weather[i]['main']['temp'],
+            'humidity': weather[i]['main']['humidity'],
+            'description': weather[i]['weather'][0]['description'],
+            'icon': weather[i]['weather'][0]['icon']}
         response.append(sample)
 
     # return {"results":weather}
