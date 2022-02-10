@@ -1,7 +1,8 @@
 import os
 import requests
 from flask import Flask
-
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
@@ -9,6 +10,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def hello_world():  # put application's code here
+
     url = "https://api.openweathermap.org/data/2.5/forecast?id=833&appid=93265401429e6e79657b6e0b6d6acb96&units=metric"
     response = requests.get(url)
     weather = response.json()['list']
