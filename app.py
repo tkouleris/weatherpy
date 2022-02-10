@@ -1,7 +1,10 @@
+import os
 import requests
 from flask import Flask
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 
 @app.route('/')
@@ -13,7 +16,6 @@ def hello_world():  # put application's code here
     country = response.json()['city']['country']
     response = []
     for i in range(len(weather)):
-        print()
         sample = {
             'dt': weather[i]['dt'],
             'temperature': weather[i]['main']['temp'],
