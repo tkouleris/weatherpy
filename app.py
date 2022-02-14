@@ -1,4 +1,7 @@
+import json
 import os
+from pathlib import Path
+
 import requests
 from flask import Flask
 from dotenv import load_dotenv
@@ -26,7 +29,6 @@ def hello_world():  # put application's code here
             'icon': weather[i]['weather'][0]['icon']}
         response.append(sample)
 
-    # return {"results":weather}
     return {"results": {"info": {"city": city, "country": country}, "weather": response}}
 
 
