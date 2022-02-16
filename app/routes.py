@@ -28,7 +28,7 @@ def unprotected():
     return 'unprotected'
 
 
-@app.route('auth/login')
+@app.route('/auth/login')
 def login():
     auth = request.authorization
     if auth and auth.password == 'password1':
