@@ -1,6 +1,6 @@
 import os
 
-import requests
+from flask_bcrypt import Bcrypt
 from flask import Flask, jsonify, request, make_response
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
@@ -13,6 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIF
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['OWM_KEY'] = os.getenv('OWM_KEY')
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 from app import routes
 

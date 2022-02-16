@@ -28,13 +28,7 @@ def unprotected():
     return 'unprotected'
 
 
-@app.route('/protected')
-@token_required
-def protected():
-    return 'protected'
-
-
-@app.route('/login')
+@app.route('auth/login')
 def login():
     auth = request.authorization
     if auth and auth.password == 'password1':
@@ -46,6 +40,7 @@ def login():
 
 
 @app.route('/forecast/<city_id>')
+@token_required
 def getForecast(city_id):
     print('getForecast')
     city = City.query.filter_by(id=city_id).first()
