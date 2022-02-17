@@ -10,7 +10,7 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = request.args.get('token')
-        print(token);
+        print(token)
         if not token:
             return jsonify({'message': 'missing token'}), 403
         try:

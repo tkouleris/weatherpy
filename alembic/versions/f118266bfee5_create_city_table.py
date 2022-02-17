@@ -11,7 +11,6 @@ import os
 from alembic import op
 import sqlalchemy as sa
 
-
 # revision identifiers, used by Alembic.
 from sqlalchemy import table, column, Integer, String
 
@@ -32,23 +31,24 @@ def upgrade():
     )
 
     city_table = table('city',
-        column('id', Integer),
-        column('city', String),
-        column('city_state', String),
-        column('country', String),
-        column('owm_id', Integer)
-    )
+                       column('id', Integer),
+                       column('city', String),
+                       column('city_state', String),
+                       column('country', String),
+                       column('owm_id', Integer)
+                       )
 
-    file = os.path.dirname(os.path.realpath(__file__))+"\\..\\data\\city.list.json"
+    file = os.path.dirname(os.path.realpath(__file__)) + "\\..\\data\\city.list.json"
     f = open(file, encoding="utf8")
     cities = json.load(f)
     data_to_import = []
     for city in cities:
-        single_city = {"city":city['name'], "city_state":city['state'], "country":city['country'],"owm_id": city['id']}
+        single_city = {"city": city['name'], "city_state": city['state'], "country": city['country'],
+                       "owm_id": city['id']}
         data_to_import.append(single_city)
     f.close()
 
-    op.bulk_insert(city_table,data_to_import)
+    op.bulk_insert(city_table, data_to_import)
 
 
 def downgrade():
