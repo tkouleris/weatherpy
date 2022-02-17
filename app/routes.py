@@ -1,16 +1,16 @@
-from app import app, jsonify, request, make_response
-from app.models import City
+from app import app, jsonify, request, make_response, jwt
+from app.models import City, User
 import requests
-import jwt
+
 import datetime
 from functools import wraps
+from app.helpers import getLoggedInUser
 
 
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.args.get('token')
-        print(token)
+        token = request.headers.get('Authorization').replace('Bearer ', '')
         if not token:
             return jsonify({'message': 'missing token'}), 403
         try:
@@ -28,23 +28,25 @@ def unprotected():
     return 'unprotected'
 
 
-@app.route('/auth/login')
+@app.route('/auth/login', methods=['POST'])
 def login():
     auth = request.authorization
-    if auth and auth.password == 'password1':
-        token = jwt.encode({'user': auth.username, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
-                           app.config['SECRET_KEY'])
-        return jsonify({'token': token})
+    user = User.query.filter_by(name=auth.username).first()
+    if user is None:
+        return jsonify({'message': 'user does not exist'}), 400
 
-    return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
+    if not user.check_password_correction(auth.password):
+        return jsonify({'message': 'wrong password'}), 400
+
+    token = jwt.encode({'user': user.name, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
+                       app.config['SECRET_KEY'])
+    return jsonify({'token': token})
 
 
 @app.route('/forecast/<city_id>')
 @token_required
 def getForecast(city_id):
-    print('getForecast')
     city = City.query.filter_by(id=city_id).first()
-    print(city.owm_id)
     url = "https://api.openweathermap.org/data/2.5/forecast?id=" + str(city.owm_id) + "&appid=" + app.config[
         'OWM_KEY'] + "&units=metric"
     response = requests.get(url)

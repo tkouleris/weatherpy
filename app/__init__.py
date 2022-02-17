@@ -1,9 +1,10 @@
 import os
-
+import jwt
 from flask_bcrypt import Bcrypt
 from flask import Flask, jsonify, request, make_response
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
+
 
 load_dotenv()
 app = Flask(__name__)
