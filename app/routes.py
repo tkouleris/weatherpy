@@ -1,4 +1,7 @@
-from app import app, jsonify, request, make_response, jwt
+import pycountry
+from sqlalchemy import text
+
+from app import app, jsonify, request, make_response, jwt, db
 from app.models import City, User
 import requests
 
@@ -21,11 +24,6 @@ def token_required(f):
         return f(*args, **kwargs)
 
     return decorated
-
-
-@app.route('/unprotected')
-def unprotected():
-    return 'unprotected'
 
 
 @app.route('/auth/login', methods=['POST'])
@@ -90,3 +88,21 @@ def getUserForecasts():
         forecasts.append({"info": {"city": city, "country": country}, "weather": response})
 
     return {"results": forecasts}
+
+
+@app.route('/countries')
+@token_required
+def getAllCountries():
+    sql = text('SELECT country FROM city GROUP BY country ORDER BY country ASC')
+    result = db.engine.execute(sql)
+    cities = [row[0] for row in result]
+    countries = []
+    for city in cities:
+        country = pycountry.countries.get(alpha_2=city)
+        if country is None: continue
+        countries.append({
+            "country_name": country.name,
+            "country_abbreviation":city
+        })
+
+    return {"results": countries}
