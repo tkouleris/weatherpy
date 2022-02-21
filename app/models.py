@@ -1,5 +1,10 @@
 from app import db, bcrypt
 
+city_user_table = db.Table('city_user',
+                           db.Column('user_id', db.ForeignKey('users.id')),
+                           db.Column('city_id', db.ForeignKey('city.id'))
+                           )
+
 
 class City(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -7,6 +12,7 @@ class City(db.Model):
     city_state = db.Column(db.String(length=255), nullable=False, unique=False)
     country = db.Column(db.String(length=255), nullable=False, unique=False)
     owm_id = db.Column(db.Integer(), nullable=True, unique=False)
+    # users = db.relationship('User', secondary=city_user_table, backref='cities')
 
 
 class User(db.Model):
@@ -15,6 +21,7 @@ class User(db.Model):
     name = db.Column(db.String(length=30), nullable=False, unique=True)
     email = db.Column(db.String(length=50), nullable=False, unique=True)
     password = db.Column(db.String(length=255), nullable=False)
+    cities = db.relationship('City', secondary=city_user_table, backref='users')
 
     def set_password(self, plain_text_password):
         self.password = bcrypt.generate_password_hash(plain_text_password).decode('utf-8')
