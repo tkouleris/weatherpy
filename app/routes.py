@@ -1,10 +1,8 @@
 import pycountry
 from sqlalchemy import text
-
 from app import app, jsonify, request, make_response, jwt, db
 from app.models import City, User
 import requests
-
 import datetime
 from functools import wraps
 from app.helpers import getLoggedInUser
@@ -102,7 +100,19 @@ def getAllCountries():
         if country is None: continue
         countries.append({
             "country_name": country.name,
-            "country_abbreviation":city
+            "country_abbreviation": city
         })
 
     return {"results": countries}
+
+
+@app.route('/city/<country>')
+@token_required
+def getCountryCities(country):
+    filtered = request.args.get('filtered')
+    if filtered is None:
+        cities = City.query.filter_by(country=country).order_by(City.city)
+    else:
+        filtered = "%{}%".format(filtered)
+        cities = City.query.filter(City.city.like(filtered), City.country == country).all()
+    return jsonify(results=[i.serialize for i in cities])

@@ -12,7 +12,28 @@ class City(db.Model):
     city_state = db.Column(db.String(length=255), nullable=False, unique=False)
     country = db.Column(db.String(length=255), nullable=False, unique=False)
     owm_id = db.Column(db.Integer(), nullable=True, unique=False)
+
     # users = db.relationship('User', secondary=city_user_table, backref='cities')
+
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+            'id': self.id,
+            'city': self.city,
+            'country': self.country,
+            'city_state': self.city_state
+            # This is an example how to deal with Many2Many relations
+            # 'many2many': self.serialize_many2many
+        }
+
+    # @property
+    # def serialize_many2many(self):
+    #     """
+    #    Return object's relations in easily serializable format.
+    #    NB! Calls many2many's serialize property.
+    #    """
+    #     return [item.serialize for item in self.many2many]
 
 
 class User(db.Model):
