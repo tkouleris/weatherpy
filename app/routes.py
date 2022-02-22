@@ -116,3 +116,21 @@ def getCountryCities(country):
         filtered = "%{}%".format(filtered)
         cities = City.query.filter(City.city.like(filtered), City.country == country).all()
     return jsonify(results=[i.serialize for i in cities])
+
+
+@app.route('/user/city/<city>', methods=['POST', 'DELETE'])
+@token_required
+def addCityToUser(city):
+    if request.method == 'POST':
+        user = getLoggedInUser()
+        city = City.query.filter_by(id=city).first()
+        user.cities.append(city)
+        db.session.add(user)
+        db.session.commit()
+    if request.method == 'DELETE':
+        user = getLoggedInUser()
+        city = City.query.filter_by(id=city).first()
+        user.cities.remove(city)
+        db.session.add(user)
+        db.session.commit()
+    return '', 200
