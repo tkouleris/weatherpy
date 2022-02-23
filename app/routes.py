@@ -36,6 +36,14 @@ class RegisterValidator(object):
             error_messages.append("Email is empty or not valid")
 
         try:
+            email = self.response.get("email", None)
+            user_exists = User.query.filter_by(email=email).first()
+            if user_exists is not None:
+                raise Exception("Error")
+        except Exception as e:
+            error_messages.append("User with this email exists")
+
+        try:
             username = self.response.get("username", None)
             if not username or len(username) < 5:
                 raise Exception("Error")
