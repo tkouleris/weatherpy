@@ -1,3 +1,5 @@
+import re
+
 import pycountry
 from sqlalchemy import text
 from app import app, jsonify, request, make_response, jwt, db
@@ -6,6 +8,48 @@ import requests
 import datetime
 from functools import wraps
 from app.helpers import getLoggedInUser
+
+
+class RegisterValidator(object):
+    def __init__(self, response={}):
+        self.response = response
+
+    email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+
+    # Password Restriction
+    # ------------------------
+    # At least 8 chars
+    # Contains at least one digit
+    # Contains at least one lower alpha char and one upper alpha char
+    # Contains at least one char within a set of special chars (@#%$^ etc.)
+    # Does not contain space, tab, etc.
+    password_regex = r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,20}'
+
+    def validate(self):
+
+        error_messages = []
+        try:
+            email = self.response.get("email", None)
+            if not email or not re.fullmatch(self.email_regex, email):
+                raise Exception("Error")
+        except Exception as e:
+            error_messages.append("Email is empty or not valid")
+
+        try:
+            username = self.response.get("username", None)
+            if not username or len(username) < 5:
+                raise Exception("Error")
+        except Exception as e:
+            error_messages.append("Username empty or less than 5 characters")
+
+        try:
+            password = self.response.get("password", None)
+            if not password or not re.findall(self.password_regex, password):
+                raise Exception("Error")
+        except Exception as e:
+            error_messages.append("Password empty or not valid")
+
+        return error_messages
 
 
 def token_required(f):
@@ -26,17 +70,36 @@ def token_required(f):
 
 @app.route('/auth/login', methods=['POST'])
 def login():
-    auth = request.authorization
-    user = User.query.filter_by(name=auth.username).first()
+    auth = request.get_json()
+
+    user = User.query.filter_by(email=auth['email']).first()
     if user is None:
         return jsonify({'message': 'user does not exist'}), 400
 
-    if not user.check_password_correction(auth.password):
+    if not user.check_password_correction(auth['password']):
         return jsonify({'message': 'wrong password'}), 400
 
     token = jwt.encode({'user': user.name, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)},
                        app.config['SECRET_KEY'])
     return jsonify({'token': token})
+
+
+@app.route('/auth/register', methods=["POST"])
+def register():
+    data = request.get_json()
+    validator = RegisterValidator(response=data)
+    validation_errors = validator.validate()
+    if len(validation_errors) > 0:
+        return {"status": "error", "message": validation_errors}, 400
+
+    user_to_be_registered = User(name=data['username'], email=data['email'])
+    user_to_be_registered.set_password(data['password'])
+    db.session.add(user_to_be_registered)
+    db.session.commit()
+
+    registered_user = User.query.filter_by(email=data['email']).first()
+
+    return {"results": {"user": registered_user.id, "message": "user created"}}
 
 
 @app.route('/forecast/<city_id>')
