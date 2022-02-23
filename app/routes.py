@@ -28,33 +28,22 @@ class RegisterValidator(object):
     def validate(self):
 
         error_messages = []
-        try:
-            email = self.response.get("email", None)
-            if not email or not re.fullmatch(self.email_regex, email):
-                raise Exception("Error")
-        except Exception as e:
+
+        email = self.response.get("email", None)
+        if not email or not re.fullmatch(self.email_regex, email):
             error_messages.append("Email is empty or not valid")
 
-        try:
-            email = self.response.get("email", None)
-            user_exists = User.query.filter_by(email=email).first()
-            if user_exists is not None:
-                raise Exception("Error")
-        except Exception as e:
+        email = self.response.get("email", None)
+        user_exists = User.query.filter_by(email=email).first()
+        if user_exists is not None:
             error_messages.append("User with this email exists")
 
-        try:
-            username = self.response.get("username", None)
-            if not username or len(username) < 5:
-                raise Exception("Error")
-        except Exception as e:
+        username = self.response.get("username", None)
+        if not username or len(username) < 5:
             error_messages.append("Username empty or less than 5 characters")
 
-        try:
-            password = self.response.get("password", None)
-            if not password or not re.findall(self.password_regex, password):
-                raise Exception("Error")
-        except Exception as e:
+        password = self.response.get("password", None)
+        if not password or not re.findall(self.password_regex, password):
             error_messages.append("Password empty or not valid")
 
         return error_messages
