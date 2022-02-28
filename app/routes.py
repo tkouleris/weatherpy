@@ -1,5 +1,4 @@
 import re
-
 import pycountry
 from sqlalchemy import text
 from app import app, jsonify, request, make_response, jwt, db
@@ -8,6 +7,7 @@ import requests
 import datetime
 from functools import wraps
 from app.helpers import getLoggedInUser
+from app.exceptions import UnauthenticatedException, ResourceNotFoundException
 
 
 class RegisterValidator(object):
@@ -52,17 +52,21 @@ class RegisterValidator(object):
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        token = request.headers.get('Authorization').replace('Bearer ', '')
-        if not token:
-            return jsonify({'message': 'missing token'}), 403
+
         try:
+            token = request.headers.get('Authorization').replace('Bearer ', '')
+            if not token:
+                return jsonify({'message': 'missing token'}), 403
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms="HS256")
         except BaseException as e:
-            return jsonify({'message': 'Invalid token'}), 403
+            raise UnauthenticatedException(message="No token. Unauthorized!")
 
         return f(*args, **kwargs)
 
     return decorated
+
+
+
 
 
 @app.route('/auth/login', methods=['POST'])
