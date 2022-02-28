@@ -66,9 +66,6 @@ def token_required(f):
     return decorated
 
 
-
-
-
 @app.route('/auth/login', methods=['POST'])
 def login():
     auth = request.get_json()
@@ -107,6 +104,9 @@ def register():
 @token_required
 def getForecast(city_id):
     city = City.query.filter_by(id=city_id).first()
+    if city is None:
+        raise ResourceNotFoundException("city not found")
+
     url = "https://api.openweathermap.org/data/2.5/forecast?id=" + str(city.owm_id) + "&appid=" + app.config[
         'OWM_KEY'] + "&units=metric"
     response = requests.get(url)
