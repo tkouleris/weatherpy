@@ -16,5 +16,8 @@ app.config['OWM_KEY'] = os.getenv('OWM_KEY')
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
-from app import routes
+from app.auth.routes import authentication
+from app.forecast.routes import forecast
+app.register_blueprint(authentication)
+app.register_blueprint(forecast)
 from app import exception_handler
