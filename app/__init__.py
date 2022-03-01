@@ -5,7 +5,6 @@ from flask import Flask, jsonify, request, make_response
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 
-
 load_dotenv()
 app = Flask(__name__)
 
@@ -18,6 +17,7 @@ bcrypt = Bcrypt(app)
 
 from app.auth.routes import authentication
 from app.forecast.routes import forecast
+
 app.register_blueprint(authentication)
 app.register_blueprint(forecast)
 from app import exception_handler
