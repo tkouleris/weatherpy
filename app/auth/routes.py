@@ -3,7 +3,7 @@ import datetime
 import jwt
 from flask import Blueprint, request, jsonify
 
-from app import app
+from app import app, db
 from app.auth.validators import RegisterValidator
 from app.models import User
 
