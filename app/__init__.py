@@ -5,16 +5,29 @@ from flask import Flask, jsonify, request, make_response
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 
-load_dotenv()
-app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['OWM_KEY'] = os.getenv('OWM_KEY')
+
+
+def create_app(config = None):
+    load_dotenv()
+    app = Flask(__name__)
+    if config == None:
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
+        app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+        app.config['OWM_KEY'] = os.getenv('OWM_KEY')
+    if config == 'testing':
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        app.config['SECRET_KEY'] = 'testing'
+        app.config['OWM_KEY'] = os.getenv('OWM_KEY')
+
+    return app
+
+
+app = create_app()
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-
 from app.auth.routes import authentication
 from app.forecast.routes import forecast
 
