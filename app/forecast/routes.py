@@ -5,6 +5,7 @@ from sqlalchemy import text
 
 from app import db, app
 from app.exceptions import ResourceNotFoundException
+from app.forecast.ForecastFetcher import ForecastFetcher
 from app.helpers import getLoggedInUser
 from app.middleware import token_required
 from app.models import City
@@ -19,48 +20,20 @@ def getForecast(city_id):
     city = City.query.filter_by(id=city_id).first()
     if city is None:
         raise ResourceNotFoundException("city not found")
-
-    url = "https://api.openweathermap.org/data/2.5/forecast?id=" + str(city.owm_id) + "&appid=" + app.config[
-        'OWM_KEY'] + "&units=metric"
-    response = requests.get(url)
-    weather = response.json()['list']
-    city = response.json()['city']['name']
-    country = response.json()['city']['country']
-    response = []
-    for i in range(len(weather)):
-        sample = {
-            'dt': weather[i]['dt'],
-            'temperature': weather[i]['main']['temp'],
-            'humidity': weather[i]['main']['humidity'],
-            'description': weather[i]['weather'][0]['description'],
-            'icon': weather[i]['weather'][0]['icon']}
-        response.append(sample)
-
-    return {"results": {"info": {"city": city, "country": country}, "weather": response}}
+    fetcher = ForecastFetcher()
+    forecast = fetcher.getForecast(city.owm_id)
+    return {"results": forecast}
 
 
 @forecast.route('/user/forecasts')
 @token_required
 def getUserForecasts():
     user = getLoggedInUser()
+    fetcher = ForecastFetcher()
     forecasts = []
     for city in user.cities:
-        url = "https://api.openweathermap.org/data/2.5/forecast?id=" + str(city.owm_id) + "&appid=" + app.config[
-            'OWM_KEY'] + "&units=metric"
-        response = requests.get(url)
-        weather = response.json()['list']
-        city = response.json()['city']['name']
-        country = response.json()['city']['country']
-        response = []
-        for i in range(len(weather)):
-            sample = {
-                'dt': weather[i]['dt'],
-                'temperature': weather[i]['main']['temp'],
-                'humidity': weather[i]['main']['humidity'],
-                'description': weather[i]['weather'][0]['description'],
-                'icon': weather[i]['weather'][0]['icon']}
-            response.append(sample)
-        forecasts.append({"info": {"city": city, "country": country}, "weather": response})
+        forecast = fetcher.getForecast(city.owm_id)
+        forecasts.append(forecast)
 
     return {"results": forecasts}
 
