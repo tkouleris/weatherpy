@@ -12,11 +12,13 @@ def create_app(config = None):
     load_dotenv()
     app = Flask(__name__)
     if config == None:
+        app.config['ENV'] = 'RUN'
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
         app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
         app.config['OWM_KEY'] = os.getenv('OWM_KEY')
     if config == 'testing':
+        app.config['ENV'] = config
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         app.config['SECRET_KEY'] = 'testing'

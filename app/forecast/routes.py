@@ -5,7 +5,7 @@ from sqlalchemy import text
 
 from app import db, app
 from app.exceptions import ResourceNotFoundException
-from app.forecast.ForecastFetcher import ForecastFetcher
+from app.forecast.ForecastFetcher import ForecastFetcherImpl, forecast_fetcher_factory
 from app.helpers import getLoggedInUser
 from app.middleware import token_required
 from app.models import City
@@ -20,7 +20,8 @@ def getForecast(city_id):
     city = City.query.filter_by(id=city_id).first()
     if city is None:
         raise ResourceNotFoundException("city not found")
-    fetcher = ForecastFetcher()
+    fetcher = forecast_fetcher_factory()
+    # fetcher = ForecastFetcherImpl()
     forecast = fetcher.getForecast(city.owm_id)
     return {"results": forecast}
 
