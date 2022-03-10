@@ -21,7 +21,6 @@ def getForecast(city_id):
     if city is None:
         raise ResourceNotFoundException("city not found")
     fetcher = forecast_fetcher_factory()
-    # fetcher = ForecastFetcherImpl()
     forecast = fetcher.getForecast(city.owm_id)
     return {"results": forecast}
 
@@ -30,7 +29,7 @@ def getForecast(city_id):
 @token_required
 def getUserForecasts():
     user = getLoggedInUser()
-    fetcher = ForecastFetcher()
+    fetcher = forecast_fetcher_factory()
     forecasts = []
     for city in user.cities:
         forecast = fetcher.getForecast(city.owm_id)

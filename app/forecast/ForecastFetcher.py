@@ -5,7 +5,7 @@ from app import app
 
 def forecast_fetcher_factory():
     if app.config['ENV'] == 'testing':
-        return MockForecastFetcher()
+        return ForecastFetcherMock()
     else:
         return ForecastFetcherImpl()
 
@@ -36,7 +36,7 @@ class ForecastFetcherImpl:
         return forecast
 
 
-class MockForecastFetcher:
+class ForecastFetcherMock:
 
     def getForecast(self, city_id):
         city = 'Gotham'
