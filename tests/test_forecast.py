@@ -36,6 +36,7 @@ class TestForecast(unittest.TestCase):
             'Authorization': 'Bearer {}'.format(self.token)
         }
         response = self.client.get('http://127.0.0.1:5000/forecast/777', headers=headers)
-        print(response.status_code)
-        print(response.get_data())
+        self.assertEqual(200, response.status_code)
+        self.assertEqual("Gotham",response.get_json()['results'][0]['info']['city'])
+        self.assertEqual("USA",response.get_json()['results'][0]['info']['country'])
         pass

@@ -1,10 +1,10 @@
 import requests
 
-from app import app
+from flask import current_app
 
 
 def forecast_fetcher_factory():
-    if app.config['ENV'] == 'testing':
+    if current_app.config['ENV'] == 'testing':
         return ForecastFetcherMock()
     else:
         return ForecastFetcherImpl()
@@ -13,11 +13,12 @@ def forecast_fetcher_factory():
 class ForecastFetcherImpl:
 
     def __init__(self):
-        self.api_key = app.config['OWM_KEY']
+        self.api_key = current_app.config['OWM_KEY']
 
     def getForecast(self, city_id):
-        url = "https://api.openweathermap.org/data/2.5/forecast?id=" + str(city_id) + "&appid=" + app.config[
+        url = "https://api.openweathermap.org/data/2.5/forecast?id=" + str(city_id) + "&appid=" + current_app.config[
             'OWM_KEY'] + "&units=metric"
+        print(url)
         response = requests.get(url)
         weather = response.json()['list']
         city = response.json()['city']['name']
