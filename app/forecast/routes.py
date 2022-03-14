@@ -20,6 +20,7 @@ def getForecast(city_id):
     city = City.query.filter_by(id=city_id).first()
     if city is None:
         raise ResourceNotFoundException("city not found")
+    print(app.config)
     fetcher = forecast_fetcher_factory()
     forecast = fetcher.getForecast(city.owm_id)
     return {"results": forecast}

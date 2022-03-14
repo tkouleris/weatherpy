@@ -6,9 +6,7 @@ from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 
 
-
-
-def create_app(config = None):
+def create_app(config=None):
     load_dotenv()
     app = Flask(__name__)
     if config == None:
@@ -18,7 +16,7 @@ def create_app(config = None):
         app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
         app.config['OWM_KEY'] = os.getenv('OWM_KEY')
     if config == 'testing':
-        app.config['ENV'] = config
+        app.config['ENV'] = 'testing'
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         app.config['SECRET_KEY'] = 'testing'
