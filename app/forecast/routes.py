@@ -1,16 +1,14 @@
 import pycountry
-import requests
 from flask import Blueprint, request, jsonify
-from sqlalchemy import text
 
-from app import db
 from app.exceptions import ResourceNotFoundException
 from app.forecast.ForecastFetcher import forecast_fetcher_factory
 from app.helpers import getLoggedInUser
 from app.middleware import token_required
 from app.models import City
 # from app.repositories import city_repository_factory
-from repositories.city_repository import city_repository_factory
+# from app.repositories.city_repository import city_repository_factory
+from app.repositories.city_repository import city_repository_factory
 
 forecast = Blueprint('forecast', __name__)
 
