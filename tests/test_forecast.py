@@ -1,4 +1,6 @@
 import unittest
+from unittest import mock
+
 from app import create_app, db, authentication, forecast
 from app.models import User, City
 
@@ -34,5 +36,19 @@ class TestForecast(unittest.TestCase):
         }
         response = self.client.get('http://127.0.0.1:5000/forecast/777', headers=headers)
         self.assertEqual(200, response.status_code)
-        self.assertEqual("Gotham",response.get_json()['results'][0]['info']['city'])
-        self.assertEqual("USA",response.get_json()['results'][0]['info']['country'])
+        self.assertEqual("Gotham", response.get_json()['results'][0]['info']['city'])
+        self.assertEqual("USA", response.get_json()['results'][0]['info']['country'])
+
+    def test_add_city_to_user(self):
+        headers = {
+            'Authorization': 'Bearer {}'.format(self.token)
+        }
+        response = self.client.post('http://127.0.0.1:5000/user/city/777', headers=headers)
+        self.assertEqual(200, response.status_code)
+
+    def test_delete_city_to_user(self):
+        headers = {
+            'Authorization': 'Bearer {}'.format(self.token)
+        }
+        response = self.client.delete('http://127.0.0.1:5000/user/city/777', headers=headers)
+        self.assertEqual(200, response.status_code)

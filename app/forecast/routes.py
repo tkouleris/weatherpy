@@ -9,7 +9,7 @@ from app.forecast.ForecastFetcher import forecast_fetcher_factory
 from app.helpers import getLoggedInUser
 from app.middleware import token_required
 from app.models import City
-from app.repositories import CityRepository
+from app.repositories import city_repository_factory
 
 forecast = Blueprint('forecast', __name__)
 
@@ -17,7 +17,8 @@ forecast = Blueprint('forecast', __name__)
 @forecast.route('/forecast/<city_id>')
 @token_required
 def getForecast(city_id):
-    city = City.query.filter_by(id=city_id).first()
+    city_repository = city_repository_factory()
+    city = city_repository.get_city_by_id(city_id)
     if city is None:
         raise ResourceNotFoundException("city not found")
     fetcher = forecast_fetcher_factory()
@@ -41,11 +42,8 @@ def getUserForecasts():
 @forecast.route('/countries')
 @token_required
 def getAllCountries():
-    city_repository = CityRepository()
+    city_repository = city_repository_factory()
     cities = city_repository.get_all_countries()
-    # sql = text('SELECT country FROM city GROUP BY country ORDER BY country ASC')
-    # result = db.engine.execute(sql)
-    # cities = [row[0] for row in result]
     countries = []
     for city in cities:
         country = pycountry.countries.get(alpha_2=city)
@@ -72,21 +70,11 @@ def getCountryCities(country):
 
 @forecast.route('/user/city/<city>', methods=['POST', 'DELETE'])
 @token_required
-def addCityToUser(city):
-    city_repository = CityRepository()
+def city_user(city):
+    city_repository = city_repository_factory()
     user = getLoggedInUser()
     if request.method == 'POST':
-
-        city_repository.add_city_to_user(city,user)
-        # city = City.query.filter_by(id=city).first()
-        # user.cities.append(city)
-        # db.session.add(user)
-        # db.session.commit()
+        city_repository.add_city_to_user(city, user)
     if request.method == 'DELETE':
-        city_repository.delete_city_from_user(city,user)
-        # user = getLoggedInUser()
-        # city = City.query.filter_by(id=city).first()
-        # user.cities.remove(city)
-        # db.session.add(user)
-        # db.session.commit()
+        city_repository.delete_city_from_user(city, user)
     return '', 200
