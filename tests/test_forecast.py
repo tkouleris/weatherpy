@@ -24,12 +24,9 @@ class TestForecast(unittest.TestCase):
                                     json={"email": "test@test.tst", "password": "test"})
         self.token = response.get_json()['token']
 
-        pass
-
     def tearDown(self):
         db.drop_all()
         self.app_ctx.pop()
-        pass
 
     def test_get_forecast(self):
         headers = {
@@ -39,4 +36,3 @@ class TestForecast(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertEqual("Gotham",response.get_json()['results'][0]['info']['city'])
         self.assertEqual("USA",response.get_json()['results'][0]['info']['country'])
-        pass
