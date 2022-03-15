@@ -9,7 +9,8 @@ from app.forecast.ForecastFetcher import forecast_fetcher_factory
 from app.helpers import getLoggedInUser
 from app.middleware import token_required
 from app.models import City
-from app.repositories import city_repository_factory
+# from app.repositories import city_repository_factory
+from repositories.city_repository import city_repository_factory
 
 forecast = Blueprint('forecast', __name__)
 

@@ -49,5 +49,6 @@ class CityRepositoryTest:
     def get_all_countries(self):
         pass
 
-    def getCityById(self, city_id):
+    def get_city_by_id(self, city_id):
+        return City()
         pass
