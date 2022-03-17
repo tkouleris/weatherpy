@@ -3,9 +3,8 @@ import datetime
 import jwt
 from flask import Blueprint, request, jsonify
 
-from app import app, db
+from app import app
 from app.auth.validators import RegisterValidator
-from app.models import User
 from app.repositories.user_repository import user_repository_factory
 
 authentication = Blueprint('authentication', __name__)
