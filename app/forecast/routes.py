@@ -5,7 +5,6 @@ from app.exceptions import ResourceNotFoundException
 from app.forecast.ForecastFetcher import forecast_fetcher_factory
 from app.helpers import getLoggedInUser
 from app.middleware import token_required
-from app.models import City
 from app.repositories.city_repository import city_repository_factory
 
 forecast = Blueprint('forecast', __name__)
@@ -56,12 +55,12 @@ def getAllCountries():
 @forecast.route('/city/<country>')
 @token_required
 def getCountryCities(country):
+    city_repository = city_repository_factory()
     filtered = request.args.get('filtered')
     if filtered is None:
-        cities = City.query.filter_by(country=country).order_by(City.city)
+        cities = city_repository.get_cities_by_country_code(country)
     else:
-        filtered = "%{}%".format(filtered)
-        cities = City.query.filter(City.city.like(filtered), City.country == country).all()
+        cities = city_repository.get_cities_by_city_name(filtered, country)
     return jsonify(results=[i.serialize for i in cities])
 
 

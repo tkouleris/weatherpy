@@ -37,6 +37,14 @@ class CityRepositoryImpl:
     def get_city_by_id(self, city_id):
         return self.model.query.filter_by(id=city_id).first()
 
+    def get_cities_by_country_code(self, country_code):
+        return self.model.query.filter_by(country=country_code).order_by(City.city)
+        pass
+
+    def get_cities_by_city_name(self,filtered, country):
+        filtered = "%{}%".format(filtered)
+        return self.model.query.filter(City.city.like(filtered), City.country == country).all()
+
 
 class CityRepositoryTest:
 
@@ -51,4 +59,7 @@ class CityRepositoryTest:
 
     def get_city_by_id(self, city_id):
         return City()
+        pass
+
+    def get_cities_by_country_code(self, country_code):
         pass

@@ -6,7 +6,7 @@ from flask import Blueprint, request, jsonify
 from app import app, db
 from app.auth.validators import RegisterValidator
 from app.models import User
-
+from app.repositories.user_repository import user_repository_factory
 
 authentication = Blueprint('authentication', __name__)
 
@@ -14,8 +14,9 @@ authentication = Blueprint('authentication', __name__)
 @authentication.route('/auth/login', methods=['POST'])
 def login():
     auth = request.get_json()
+    user_repository = user_repository_factory()
+    user = user_repository.get_user_by_email(auth['email'])
 
-    user = User.query.filter_by(email=auth['email']).first()
     if user is None:
         return jsonify({'message': 'user does not exist'}), 400
 
@@ -34,12 +35,7 @@ def register():
     validation_errors = validator.validate()
     if len(validation_errors) > 0:
         return {"status": "error", "message": validation_errors}, 400
-
-    user_to_be_registered = User(name=data['username'], email=data['email'])
-    user_to_be_registered.set_password(data['password'])
-    db.session.add(user_to_be_registered)
-    db.session.commit()
-
-    registered_user = User.query.filter_by(email=data['email']).first()
+    user_repository = user_repository_factory()
+    registered_user = user_repository.create(data)
 
     return {"results": {"user": registered_user.id, "message": "user created"}}
