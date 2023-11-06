@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Weather at {{ title }}</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                {% for city in city_list %}
+                                <a href="{{url_for('dashboard.user_dashboard_page')}}?city={{ city }}" class="btn" style="width: 100%;margin-bottom: 1px;background-color: white;border:1px dotted grey;">
+                                    {{ city_list[city].title }}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"><small>{{ weather['dt'] }} (local)</small></h5><br/>
+                                <h5 class="card-title"><b>{{ weather['name'] }}</b> </h5><br/>
+
+                                <div class="row" style="">
+                                    <div class="col-12">
+                                        {{ weather['weather'][0]['main'] }}, {{ weather['weather'][0]['description'] }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4"><img src="https://openweathermap.org/img/wn/{{ weather['weather'][0]['icon'] }}@2x.png" alt="icon"></div>
+                                    <div class="col-8" style="font-size: 40px;text-align: left;vertical-align: middle;">
+                                        {{ weather['main']['temp'] }}°C <br/>
+                                        <div class="row" style="font-size: 16px;">
+                                            Feels like {{ weather['main']['feels_like'] }}°C
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6"><b>Humidity:</b> {{ weather['main']['humidity'] }} %</div>
+                                    <div class="col-6"><b>Wind Speed:</b> {{ weather['wind']['speed'] }} m/s</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-12"><h1>5 day / 3 hour forecast</h1></div>
+                </div>
+                <div class="row">
+                    {% for day in custom_forecast %}
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title m-0"><span style="font-size: 25px;font-weight: bold;">{{ day }}</span> </h5>
+                                </div>
+                                <div class="card-body">
+                                    <table width="100%" >
+                                    {% for data in custom_forecast[day] %}
+                                        <tr style="border-bottom: 1px solid black;">
+                                            <td>{{ data['time'] }} <i class="fa fa-clock"></i></td>
+                                            <td><i class="fa fa-temperature-high"></i> {{ data['temp'] }}°C</td>
+                                            <td><i class="fas fa-tint"></i> {{ data['humidity'] }}% </td>
+                                            <td><i class="fa fa-wind"></i> {{ data['wind_speed'] }}m/s</td>
+                                            <td>{{ data['description'] }}</td>
+                                            <td><img src="https://openweathermap.org/img/wn/{{ data['icon'] }}.png" alt="icon"></td>
+                                        </tr>
+                                    {% endfor %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+{% endblock %}
+
