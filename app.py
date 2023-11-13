@@ -21,6 +21,9 @@ def init_blueprints():
     from blueprints import options as options_blueprint
     app.register_blueprint(options_blueprint.options)
 
+    from blueprints import api as api_blueprint
+    app.register_blueprint(api_blueprint.api)
+
 
 def create_app():
     load_dotenv()
