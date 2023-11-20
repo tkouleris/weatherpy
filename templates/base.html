@@ -181,38 +181,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ url_for('static', filename='dist/js/adminlte.min.js') }}"></script>
-<script>
-    $('[name=btn_insert_city]').click(function () {
-        let city_id = $(this).attr('id').replace('btn_insert_city_', '')
-        $.ajax({
-            method: 'POST',
-            url: "{{ url_for('options.insert_option') }}",
-            data: {
-                city_id: city_id
-            }
-        }).done(function () {
-            location.reload()
-        });
-    })
 
-    $('[name=btn_delete_city]').click(function () {
-        let city_id = $(this).attr('id').replace('btn_delete_city_', '')
-        $.ajax({
-            method: 'DELETE',
-            url: "{{ url_for('options.delete_option') }}",
-            data: {
-                city_id: city_id
-            }
-        }).done(function () {
-            location.reload()
-        });
-    })
-</script>
-<script>
-    $('#selected_country').on('change', function () {
-        let url = location.protocol + '//' + location.host + location.pathname + '?selected_country=' + this.value
-        window.location.href = url;
-    });
-</script>
 </body>
 </html>
