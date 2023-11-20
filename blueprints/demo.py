@@ -85,7 +85,6 @@ def index():
             'description': day['weather'][0]['description']
         })
 
-
     attica_cities = city_repository.get_cities_by_region('Attica')
     theassaloniki_cities = city_repository.get_cities_by_region('Thessaloniki')
 
@@ -99,6 +98,19 @@ def index():
                            title=title,
                            weather=weather,
                            custom_forecast=custom_forecast,
+                           attica_cities=attica_cities,
+                           theassaloniki_cities=theassaloniki_cities,
+                           page_data=page_data()
+                           )
+
+@demo.route('/contact')
+def contact():
+    city_repository = CityRepository()
+    attica_cities = city_repository.get_cities_by_region('Attica')
+    theassaloniki_cities = city_repository.get_cities_by_region('Thessaloniki')
+
+    return render_template('contact.html',
+                           title='Contact',
                            attica_cities=attica_cities,
                            theassaloniki_cities=theassaloniki_cities,
                            page_data=page_data()
