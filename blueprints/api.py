@@ -1,7 +1,7 @@
 import time
 from datetime import datetime
 
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 
 import helper
 from Forecast import OpenWeatherMapForecasts
@@ -68,4 +68,29 @@ def index():
             'description': day['weather'][0]['description']
         })
 
-    return {'success': True, 'current_weather': weather, 'forecast': custom_forecast}
+    return {
+        'success': True,
+        'current_weather': weather,
+        'forecast': custom_forecast,
+        'cities': available_cities()
+    }
+
+
+def available_cities():
+    city_repository = CityRepository()
+    cities = {}
+    attica_cities = city_repository.get_cities_by_region('Attica')
+    cities['Attica'] = []
+    for city in attica_cities:
+        cities['Attica'].append({
+            'id': city.id,
+            'name': city.city
+        })
+    cities['Thessaloniki'] = []
+    theassaloniki_cities = city_repository.get_cities_by_region('Thessaloniki')
+    for city in theassaloniki_cities:
+        cities['Thessaloniki'].append({
+            'id': city.id,
+            'name': city.city
+        })
+    return cities
