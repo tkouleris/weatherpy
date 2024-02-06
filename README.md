@@ -37,6 +37,7 @@ SQLALCHEMY_DATABASE_URI the database connection for example
 ## Migrations
 
     flask db upgrade
+    python data/city_seeder.py
 
 ## Run the application
 
