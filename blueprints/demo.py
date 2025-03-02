@@ -14,6 +14,23 @@ from repositories.CityRepository import CityRepository
 
 demo = Blueprint('demo', __name__)
 
+cities = {
+    "Ágios Stéfanos":2629,
+    "Anávyssos":2710,
+    "Dimos Chalandri":209077,
+    "Dimos Athens":209095,
+    "Dimos Kallithea":209098,
+    "Dimos Lavreotiki":209127,
+    "Dimos Markopoulo Mesogaias":209138,
+    "Dimos Aspropyrgos":209148,
+    "Peraía":19654,
+    "Panórama":19666,
+    "Koufália":19756,
+    "Asvestochóri":19885,
+    "Ássiros":19886,
+    "Asproválta":19887,
+    "Dimos Thessaloniki":209076,
+}
 
 @demo.route('/')
 def index():
@@ -22,6 +39,9 @@ def index():
     city = city_repository.find_city_by_id(209095)
     if 'city_id' in request.args:
         city = city_repository.find_city_by_id(request.args.get('city_id'))
+        return redirect(url_for('demo.index')+"?city="+city.city, code=302)
+    if 'city' in request.args and request.args.get('city') in cities:
+        city = city_repository.find_city_by_id(cities[request.args.get('city')])
 
     coords_string = city.coords.replace("{", "")
     coords_string = coords_string.replace("}", "")

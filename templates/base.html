@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                            aria-expanded="false" class="nav-link dropdown-toggle">Attica</a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                             {% for attica_city in attica_cities %}
-                            <li><a href="{{url_for('demo.index')}}?city_id={{ attica_city.id }}" class="dropdown-item">{{ attica_city['city'] }}</a></li>
+                            <li><a href="{{url_for('demo.index')}}?city={{ attica_city.city }}" class="dropdown-item">{{ attica_city['city'] }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>
@@ -50,7 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                            aria-expanded="false" class="nav-link dropdown-toggle">Thessaloniki</a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                             {% for thessaloniki_city in theassaloniki_cities %}
-                            <li><a href="{{url_for('demo.index')}}?city_id={{ thessaloniki_city.id }}" class="dropdown-item">{{ thessaloniki_city['city'] }}</a></li>
+                            <li><a href="{{url_for('demo.index')}}?city={{ thessaloniki_city.city }}" class="dropdown-item">{{ thessaloniki_city['city'] }}</a></li>
                             {% endfor %}
                         </ul>
                     </li>
