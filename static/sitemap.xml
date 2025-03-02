@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://weather.tkouleris.eu/</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=%C3%81gios%20St%C3%A9fanos</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=An%C3%A1vyssos</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Dimos%20Chalandri</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Dimos%20Athens</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Dimos%20Kallithea</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Dimos%20Lavreotiki</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Dimos%20Markopoulo%20Mesogaias</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Dimos%20Aspropyrgos</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Pera%C3%ADa</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Pan%C3%B3rama</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Kouf%C3%A1lia</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Asvestoch%C3%B3ri</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=%C3%81ssiros</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Asprov%C3%A1lta</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/?city=Dimos%20Thessaloniki</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://weather.tkouleris.eu/contact</loc>
+  <lastmod>2025-03-02T18:55:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>
