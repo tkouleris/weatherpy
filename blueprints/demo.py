@@ -3,7 +3,7 @@ import time
 from datetime import datetime, timezone
 
 from flask_login import current_user
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, send_from_directory
 import requests
 
 import helper
@@ -115,3 +115,8 @@ def contact():
                            theassaloniki_cities=theassaloniki_cities,
                            page_data=page_data()
                            )
+
+@demo.route('/robots.txt')
+@demo.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
