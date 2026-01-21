@@ -156,6 +156,28 @@ header {
     text-align: center;
 }
 
+.location-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.location-time .location,
+.location-time .time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.location-time .separator {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
 .main-info {
     display: flex;
     align-items: center;
@@ -307,6 +329,18 @@ header {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-secondary);
     font-size: 0.9rem;
+}
+
+.footer-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
 }
 
 .powered-by {

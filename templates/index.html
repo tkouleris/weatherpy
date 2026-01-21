@@ -8,175 +8,197 @@
 
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar">
-            <div class="logo">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="var(--accent-color)"/>
-                    <path d="M20 10L12 25H28L20 10Z" fill="var(--card-bg)"/>
-                </svg>
-                <span>WeatherWise</span>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="40" height="40" rx="8" fill="var(--accent-color)"/>
+                <path d="M20 10L12 25H28L20 10Z" fill="var(--card-bg)"/>
+            </svg>
+            <span>WeatherWise</span>
+        </div>
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Regions</a>
+                <div class="dropdown-content">
+                    <a href="#">Europe</a>
+                    <a href="#">Asia</a>
+                    <a href="#">America</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropbtn">Settings</a>
+                <div class="dropdown-content">
+                    <a href="#">Units: Metric</a>
+                    <a href="#">Units: Imperial</a>
+                    <a href="#">Theme: Dark</a>
+                </div>
+            </li>
+            <li><a href="#" class="contact-link">Contact</a></li>
+        </ul>
+    </nav>
+    <header>
+    </header>
+
+    <main id="weather-display">
+        <section class="current-weather">
+            <div id="location-time" class="location-time">
+                    <span class="location">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        {{ weather['name'] }}
+                    </span>
+                <span class="separator">-</span>
+                <span class="time">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {{ weather['dt'] }}
+                    </span>
             </div>
-            <ul class="nav-links">
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Regions</a>
-                    <div class="dropdown-content">
-                        <a href="#">Europe</a>
-                        <a href="#">Asia</a>
-                        <a href="#">America</a>
-                    </div>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Settings</a>
-                    <div class="dropdown-content">
-                        <a href="#">Units: Metric</a>
-                        <a href="#">Units: Imperial</a>
-                        <a href="#">Theme: Dark</a>
-                    </div>
-                </li>
-                <li><a href="#" class="contact-link">Contact</a></li>
-            </ul>
-        </nav>
-        <header>
-        </header>
 
-        <main id="weather-display">
-            <section class="current-weather">
-                <div class="main-info">
+            <div class="main-info">
 
-                    <img id="current-icon" src="https://openweathermap.org/img/wn/{{ weather['weather'][0]['icon'] }}@2x.png" alt="Weather Icon" class="large-icon">
-                    <div id="current-temp" class="temp">{{ weather['main']['temp'] }}°C</div>
+                <img id="current-icon"
+                     src="https://openweathermap.org/img/wn/{{ weather['weather'][0]['icon'] }}@2x.png"
+                     alt="Weather Icon" class="large-icon">
+                <div id="current-temp" class="temp">{{ weather['main']['temp'] }}°C</div>
+            </div>
+            <div class="details">
+                <div class="detail-item">
+                    <span class="label">Humidity:</span>
+                    <span id="current-humidity">{{ weather['main']['humidity'] }}%</span>
                 </div>
-                <div class="details">
-                    <div class="detail-item">
-                        <span class="label">Humidity:</span>
-                        <span id="current-humidity">{{ weather['main']['humidity'] }}%</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="label">Wind Speed:</span>
-                        <span id="current-wind">{{ weather['wind']['speed'] }} m/s</span>
-                    </div>
+                <div class="detail-item">
+                    <span class="label">Wind Speed:</span>
+                    <span id="current-wind">{{ weather['wind']['speed'] }} m/s</span>
                 </div>
-                <div id="current-description" class="description">
-                    {{ weather['weather'][0]['main'] }}, {{ weather['weather'][0]['description'] }}
-                </div>
-            </section>
+            </div>
+            <div id="current-description" class="description">
+                {{ weather['weather'][0]['main'] }}, {{ weather['weather'][0]['description'] }}
+            </div>
+        </section>
 
-            <section class="forecast">
-                <h3>5-Day Forecast (Every 3 Hours)</h3>
-                <div id="forecast-timeline" class="timeline">
-                    <!-- Day 1 -->
-                    <div class="forecast-day-row">
-                        <h4>Monday, Jan 20</h4>
-                        <div class="day-items">
-                            <div class="forecast-item">
-                                <div class="forecast-time">10:00 AM</div>
-                                <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">22°C</div>
-                                <div class="forecast-description">clear sky</div>
-                                <div class="forecast-details">
-                                    <div>💧 40%</div>
-                                    <div>💨 10</div>
-                                </div>
-                            </div>
-                            <div class="forecast-item">
-                                <div class="forecast-time">01:00 PM</div>
-                                <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">24°C</div>
-                                <div class="forecast-description">clear sky</div>
-                                <div class="forecast-details">
-                                    <div>💧 38%</div>
-                                    <div>💨 12</div>
-                                </div>
-                            </div>
-                            <div class="forecast-item">
-                                <div class="forecast-time">04:00 PM</div>
-                                <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">21°C</div>
-                                <div class="forecast-description">few clouds</div>
-                                <div class="forecast-details">
-                                    <div>💧 42%</div>
-                                    <div>💨 11</div>
-                                </div>
-                            </div>
-                            <div class="forecast-item">
-                                <div class="forecast-time">07:00 PM</div>
-                                <img src="https://openweathermap.org/img/wn/03d@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">19°C</div>
-                                <div class="forecast-description">scattered clouds</div>
-                                <div class="forecast-details">
-                                    <div>💧 45%</div>
-                                    <div>💨 9</div>
-                                </div>
+        <section class="forecast">
+            <h3>5-Day Forecast (Every 3 Hours)</h3>
+            <div id="forecast-timeline" class="timeline">
+                <!-- Day 1 -->
+                <div class="forecast-day-row">
+                    <h4>Monday, Jan 20</h4>
+                    <div class="day-items">
+                        <div class="forecast-item">
+                            <div class="forecast-time">10:00 AM</div>
+                            <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">22°C</div>
+                            <div class="forecast-description">clear sky</div>
+                            <div class="forecast-details">
+                                <div>💧 40%</div>
+                                <div>💨 10</div>
                             </div>
                         </div>
-                    </div>
-                    <!-- Day 2 -->
-                    <div class="forecast-day-row">
-                        <h4>Tuesday, Jan 21</h4>
-                        <div class="day-items">
-                            <div class="forecast-item">
-                                <div class="forecast-time">10:00 AM</div>
-                                <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">18°C</div>
-                                <div class="forecast-description">broken clouds</div>
-                                <div class="forecast-details">
-                                    <div>💧 50%</div>
-                                    <div>💨 8</div>
-                                </div>
+                        <div class="forecast-item">
+                            <div class="forecast-time">01:00 PM</div>
+                            <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">24°C</div>
+                            <div class="forecast-description">clear sky</div>
+                            <div class="forecast-details">
+                                <div>💧 38%</div>
+                                <div>💨 12</div>
                             </div>
-                            <div class="forecast-item">
-                                <div class="forecast-time">01:00 PM</div>
-                                <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">20°C</div>
-                                <div class="forecast-description">few clouds</div>
-                                <div class="forecast-details">
-                                    <div>💧 48%</div>
-                                    <div>💨 10</div>
-                                </div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-time">04:00 PM</div>
+                            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">21°C</div>
+                            <div class="forecast-description">few clouds</div>
+                            <div class="forecast-details">
+                                <div>💧 42%</div>
+                                <div>💨 11</div>
                             </div>
-                            <div class="forecast-item">
-                                <div class="forecast-time">04:00 PM</div>
-                                <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">22°C</div>
-                                <div class="forecast-description">clear sky</div>
-                                <div class="forecast-details">
-                                    <div>💧 45%</div>
-                                    <div>💨 12</div>
-                                </div>
-                            </div>
-                            <div class="forecast-item">
-                                <div class="forecast-time">07:00 PM</div>
-                                <img src="https://openweathermap.org/img/wn/01n@2x.png" alt="icon" class="forecast-icon">
-                                <div class="forecast-temp">21°C</div>
-                                <div class="forecast-description">clear sky</div>
-                                <div class="forecast-details">
-                                    <div>💧 47%</div>
-                                    <div>💨 11</div>
-                                </div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-time">07:00 PM</div>
+                            <img src="https://openweathermap.org/img/wn/03d@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">19°C</div>
+                            <div class="forecast-description">scattered clouds</div>
+                            <div class="forecast-details">
+                                <div>💧 45%</div>
+                                <div>💨 9</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
-
-        <div id="status-message" class="hidden"></div>
-
-        <footer class="footer">
-            <div class="copyright">
-                &copy; copyright 2026 Thodoris Kouleris, All rights reserved
+                <!-- Day 2 -->
+                <div class="forecast-day-row">
+                    <h4>Tuesday, Jan 21</h4>
+                    <div class="day-items">
+                        <div class="forecast-item">
+                            <div class="forecast-time">10:00 AM</div>
+                            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">18°C</div>
+                            <div class="forecast-description">broken clouds</div>
+                            <div class="forecast-details">
+                                <div>💧 50%</div>
+                                <div>💨 8</div>
+                            </div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-time">01:00 PM</div>
+                            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">20°C</div>
+                            <div class="forecast-description">few clouds</div>
+                            <div class="forecast-details">
+                                <div>💧 48%</div>
+                                <div>💨 10</div>
+                            </div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-time">04:00 PM</div>
+                            <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">22°C</div>
+                            <div class="forecast-description">clear sky</div>
+                            <div class="forecast-details">
+                                <div>💧 45%</div>
+                                <div>💨 12</div>
+                            </div>
+                        </div>
+                        <div class="forecast-item">
+                            <div class="forecast-time">07:00 PM</div>
+                            <img src="https://openweathermap.org/img/wn/01n@2x.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">21°C</div>
+                            <div class="forecast-description">clear sky</div>
+                            <div class="forecast-details">
+                                <div>💧 47%</div>
+                                <div>💨 11</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="powered-by">
-                <span>Powered by Junie</span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 0L24 12L12 24L0 12L12 0Z" fill="#7B61FF"/>
-                    <rect x="6" y="6" width="12" height="12" fill="black"/>
-                    <rect x="8" y="8" width="5" height="1" fill="white"/>
-                    <rect x="8" y="15" width="8" height="1" fill="white"/>
-                </svg>
-            </div>
-        </footer>
-    </div>
+        </section>
+    </main>
+
+    <div id="status-message" class="hidden"></div>
+
+    <footer class="footer">
+        <div class="copyright">
+            &copy; Copyright 2026 <a href="https://tkouleris.eu" class="footer-link">Thodoris Kouleris</a>, All rights reserved
+        </div>
+        <div class="powered-by">
+            <span>Powered by Junie</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0L24 12L12 24L0 12L12 0Z" fill="#7B61FF"/>
+                <rect x="6" y="6" width="12" height="12" fill="black"/>
+                <rect x="8" y="8" width="5" height="1" fill="white"/>
+                <rect x="8" y="15" width="8" height="1" fill="white"/>
+            </svg>
+        </div>
+    </footer>
+</div>
 </body>
 </html>
