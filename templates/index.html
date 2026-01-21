@@ -11,19 +11,20 @@
 <div class="container">
     <nav class="navbar">
         <div class="logo">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="40" height="40" rx="8" fill="var(--accent-color)"/>
-                <path d="M20 10L12 25H28L20 10Z" fill="var(--card-bg)"/>
-            </svg>
-            <span>WeatherWise</span>
+            <img width="40" height="40" src="{{ url_for('static', filename='dist/img/weather_app.png') }}" />
+{#            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">#}
+{#                <rect width="40" height="40" rx="8" fill="var(--accent-color)"/>#}
+{#                <path d="M20 10L12 25H28L20 10Z" fill="var(--card-bg)"/>#}
+{#            </svg>#}
+            <span>Weather App</span>
         </div>
         <ul class="nav-links">
             <li class="dropdown">
-                <a href="#" class="dropbtn">Regions</a>
+                <a href="#" class="dropbtn">Attica</a>
                 <div class="dropdown-content">
-                    <a href="#">Europe</a>
-                    <a href="#">Asia</a>
-                    <a href="#">America</a>
+                    {% for attica_city in attica_cities %}
+                    <a href="{{url_for('demo.index')}}?city={{ attica_city.city }}" >{{ attica_city['city'] }}</a>
+                    {% endfor %}
                 </div>
             </li>
             <li class="dropdown">
@@ -87,98 +88,25 @@
         <section class="forecast">
             <h3>5-Day Forecast (Every 3 Hours)</h3>
             <div id="forecast-timeline" class="timeline">
-                <!-- Day 1 -->
-                <div class="forecast-day-row">
-                    <h4>Monday, Jan 20</h4>
+                {% for day in custom_forecast %}
+                    <div class="forecast-day-row">
+                    <h4>{{ day }}</h4>
                     <div class="day-items">
-                        <div class="forecast-item">
-                            <div class="forecast-time">10:00 AM</div>
-                            <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">22°C</div>
-                            <div class="forecast-description">clear sky</div>
+                        {% for data in custom_forecast[day] %}
+                            <div class="forecast-item">
+                            <div class="forecast-time">{{ data['time'] }}</div>
+                            <img src="https://openweathermap.org/img/wn/{{ data['icon'] }}.png" alt="icon" class="forecast-icon">
+                            <div class="forecast-temp">{{ data['temp'] }}°C</div>
+                            <div class="forecast-description">{{ data['description'] }}</div>
                             <div class="forecast-details">
-                                <div>💧 40%</div>
-                                <div>💨 10</div>
+                                <div>💧 {{ data['humidity'] }}%</div>
+                                <div>💨 {{ data['wind_speed'] }}m/s</div>
                             </div>
                         </div>
-                        <div class="forecast-item">
-                            <div class="forecast-time">01:00 PM</div>
-                            <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">24°C</div>
-                            <div class="forecast-description">clear sky</div>
-                            <div class="forecast-details">
-                                <div>💧 38%</div>
-                                <div>💨 12</div>
-                            </div>
-                        </div>
-                        <div class="forecast-item">
-                            <div class="forecast-time">04:00 PM</div>
-                            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">21°C</div>
-                            <div class="forecast-description">few clouds</div>
-                            <div class="forecast-details">
-                                <div>💧 42%</div>
-                                <div>💨 11</div>
-                            </div>
-                        </div>
-                        <div class="forecast-item">
-                            <div class="forecast-time">07:00 PM</div>
-                            <img src="https://openweathermap.org/img/wn/03d@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">19°C</div>
-                            <div class="forecast-description">scattered clouds</div>
-                            <div class="forecast-details">
-                                <div>💧 45%</div>
-                                <div>💨 9</div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-                <!-- Day 2 -->
-                <div class="forecast-day-row">
-                    <h4>Tuesday, Jan 21</h4>
-                    <div class="day-items">
-                        <div class="forecast-item">
-                            <div class="forecast-time">10:00 AM</div>
-                            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">18°C</div>
-                            <div class="forecast-description">broken clouds</div>
-                            <div class="forecast-details">
-                                <div>💧 50%</div>
-                                <div>💨 8</div>
-                            </div>
-                        </div>
-                        <div class="forecast-item">
-                            <div class="forecast-time">01:00 PM</div>
-                            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">20°C</div>
-                            <div class="forecast-description">few clouds</div>
-                            <div class="forecast-details">
-                                <div>💧 48%</div>
-                                <div>💨 10</div>
-                            </div>
-                        </div>
-                        <div class="forecast-item">
-                            <div class="forecast-time">04:00 PM</div>
-                            <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">22°C</div>
-                            <div class="forecast-description">clear sky</div>
-                            <div class="forecast-details">
-                                <div>💧 45%</div>
-                                <div>💨 12</div>
-                            </div>
-                        </div>
-                        <div class="forecast-item">
-                            <div class="forecast-time">07:00 PM</div>
-                            <img src="https://openweathermap.org/img/wn/01n@2x.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">21°C</div>
-                            <div class="forecast-description">clear sky</div>
-                            <div class="forecast-details">
-                                <div>💧 47%</div>
-                                <div>💨 11</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </section>
     </main>
