@@ -11,11 +11,11 @@
 <div class="container">
     <nav class="navbar">
         <div class="logo">
-            <img width="40" height="40" src="{{ url_for('static', filename='dist/img/weather_app.png') }}" />
-{#            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">#}
-{#                <rect width="40" height="40" rx="8" fill="var(--accent-color)"/>#}
-{#                <path d="M20 10L12 25H28L20 10Z" fill="var(--card-bg)"/>#}
-{#            </svg>#}
+            <img width="40" height="40" src="{{ url_for('static', filename='dist/img/weather_app.png') }}"/>
+            {#            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">#}
+            {#                <rect width="40" height="40" rx="8" fill="var(--accent-color)"/>#}
+            {#                <path d="M20 10L12 25H28L20 10Z" fill="var(--card-bg)"/>#}
+            {#            </svg>#}
             <span>Weather App</span>
         </div>
         <ul class="nav-links">
@@ -23,16 +23,17 @@
                 <a href="#" class="dropbtn">Attica</a>
                 <div class="dropdown-content">
                     {% for attica_city in attica_cities %}
-                    <a href="{{url_for('demo.index')}}?city={{ attica_city.city }}" >{{ attica_city['city'] }}</a>
+                        <a href="{{ url_for('demo.index') }}?city={{ attica_city.city }}">{{ attica_city['city'] }}</a>
                     {% endfor %}
                 </div>
             </li>
             <li class="dropdown">
-                <a href="#" class="dropbtn">Settings</a>
+                <a href="#" class="dropbtn">Thessaloniki</a>
                 <div class="dropdown-content">
-                    <a href="#">Units: Metric</a>
-                    <a href="#">Units: Imperial</a>
-                    <a href="#">Theme: Dark</a>
+                    {% for thessaloniki_city in theassaloniki_cities %}
+                        <a href="{{ url_for('demo.index') }}?city={{ thessaloniki_city.city }}"
+                           class="dropdown-item">{{ thessaloniki_city['city'] }}</a>
+                    {% endfor %}
                 </div>
             </li>
             <li><a href="#" class="contact-link">Contact</a></li>
@@ -90,22 +91,23 @@
             <div id="forecast-timeline" class="timeline">
                 {% for day in custom_forecast %}
                     <div class="forecast-day-row">
-                    <h4>{{ day }}</h4>
-                    <div class="day-items">
-                        {% for data in custom_forecast[day] %}
-                            <div class="forecast-item">
-                            <div class="forecast-time">{{ data['time'] }}</div>
-                            <img src="https://openweathermap.org/img/wn/{{ data['icon'] }}.png" alt="icon" class="forecast-icon">
-                            <div class="forecast-temp">{{ data['temp'] }}°C</div>
-                            <div class="forecast-description">{{ data['description'] }}</div>
-                            <div class="forecast-details">
-                                <div>💧 {{ data['humidity'] }}%</div>
-                                <div>💨 {{ data['wind_speed'] }}m/s</div>
-                            </div>
+                        <h4>{{ day }}</h4>
+                        <div class="day-items">
+                            {% for data in custom_forecast[day] %}
+                                <div class="forecast-item">
+                                    <div class="forecast-time">{{ data['time'] }}</div>
+                                    <img src="https://openweathermap.org/img/wn/{{ data['icon'] }}.png" alt="icon"
+                                         class="forecast-icon">
+                                    <div class="forecast-temp">{{ data['temp'] }}°C</div>
+                                    <div class="forecast-description">{{ data['description'] }}</div>
+                                    <div class="forecast-details">
+                                        <div>💧 {{ data['humidity'] }}%</div>
+                                        <div>💨 {{ data['wind_speed'] }}m/s</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
                     </div>
-                </div>
                 {% endfor %}
             </div>
         </section>
@@ -115,7 +117,8 @@
 
     <footer class="footer">
         <div class="copyright">
-            &copy; Copyright 2026 <a href="https://tkouleris.eu" class="footer-link">Thodoris Kouleris</a>, All rights reserved
+            &copy; Copyright 2026 <a href="https://tkouleris.eu" class="footer-link">Thodoris Kouleris</a>, All rights
+            reserved
         </div>
         <div class="powered-by">
             <span>Powered by Junie</span>
