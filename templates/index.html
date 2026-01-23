@@ -39,8 +39,8 @@
     <header>
     </header>
 
-    <main id="weather-display">
-        <section class="current-weather">
+    <main id="weather-display" >
+        <section class="current-weather" >
             <div id="location-time" class="location-time">
                     <span class="location">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -70,11 +70,13 @@
             </div>
             <div class="details">
                 <div class="detail-item">
-                    <span class="label">Humidity:</span>
+{#                    <span class="label">Humidity:</span>#}
+                    <span class="label">💧</span>
                     <span id="current-humidity">{{ weather['main']['humidity'] }}%</span>
                 </div>
                 <div class="detail-item">
-                    <span class="label">Wind Speed:</span>
+{#                    <span class="label">Wind Speed:</span>#}
+                    <span class="label">💨</span>
                     <span id="current-wind">{{ weather['wind']['speed'] }} m/s</span>
                 </div>
             </div>

@@ -152,8 +152,12 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.55);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 50px;
 }
 
 .location-time {
@@ -162,8 +166,9 @@ header {
     justify-content: center;
     gap: 10px;
     font-size: 1.1rem;
-    color: var(--text-secondary);
+    /*color: var(--text-secondary);*/
     margin-bottom: 15px;
+    color: black;
 }
 
 .location-time .location,
@@ -182,6 +187,7 @@ header {
     display: flex;
     align-items: center;
     gap: 20px;
+    /*background-color: grey;*/
 }
 
 .large-icon {
@@ -204,6 +210,7 @@ header {
 
 .detail-item {
     font-size: 1.1rem;
+    color: black;
 }
 
 .label {
@@ -215,7 +222,8 @@ header {
     margin-top: 10px;
     text-transform: capitalize;
     font-size: 1.2rem;
-    color: var(--accent-color);
+    /*color: var(--accent-color);*/
+    color: black;
 }
 
 .forecast {
