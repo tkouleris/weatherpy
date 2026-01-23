@@ -278,14 +278,16 @@ header {
 
 .forecast-description {
     font-size: 0.75rem;
-    color: var(--accent-color);
+    /*color: var(--accent-color);*/
+    color: black;
     margin-bottom: 8px;
     text-transform: capitalize;
 }
 
 .forecast-details {
     font-size: 0.7rem;
-    color: var(--text-secondary);
+    /*color: var(--text-secondary);*/
+    color: black;
 }
 
 @media (max-width: 600px) {
