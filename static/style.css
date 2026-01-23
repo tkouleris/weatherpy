@@ -110,7 +110,7 @@ header {
     position: absolute;
     background-color: var(--card-bg);
     min-width: 140px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     z-index: 100;
     border-radius: 8px;
     top: 100%;
@@ -303,27 +303,34 @@ header {
         flex-direction: column;
         gap: 15px;
     }
+
     .nav-links {
         gap: 10px;
     }
+
     .main-info {
         flex-direction: column;
         gap: 0;
     }
+
     .temp {
         font-size: 3rem;
     }
+
     .details {
         flex-direction: column;
         gap: 5px;
     }
+
     .forecast-item {
         flex: 0 0 calc(50% - 5px); /* 2 items per row on mobile */
         padding: 10px 5px;
     }
+
     .forecast-details {
         font-size: 0.6rem;
     }
+
     .footer {
         flex-direction: column;
         gap: 15px;
@@ -343,6 +350,13 @@ header {
 }
 
 .footer-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.generic-link {
     color: var(--accent-color);
     text-decoration: none;
     font-weight: 500;

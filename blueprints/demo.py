@@ -185,6 +185,19 @@ def contact():
                            page_data=page_data()
                            )
 
+@demo.route('/contact-b')
+def contact_b():
+    city_repository = CityRepository()
+    attica_cities = city_repository.get_cities_by_region('Attica')
+    theassaloniki_cities = city_repository.get_cities_by_region('Thessaloniki')
+
+    return render_template('contact-b.html',
+                           title='Contact',
+                           attica_cities=attica_cities,
+                           theassaloniki_cities=theassaloniki_cities,
+                           page_data=page_data()
+                           )
+
 @demo.route('/robots.txt')
 @demo.route('/sitemap.xml')
 def static_from_root():
