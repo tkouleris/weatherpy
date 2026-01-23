@@ -39,8 +39,8 @@
     <header>
     </header>
 
-    <main id="weather-display" >
-        <section class="current-weather" >
+    <main id="weather-display">
+        <section class="current-weather">
             <div id="location-time" class="location-time">
                     <span class="location">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -68,14 +68,17 @@
                      alt="Weather Icon" class="large-icon">
                 <div id="current-temp" class="temp">{{ weather['main']['temp'] }}°C</div>
             </div>
+            <div class="row" style="font-size: 12px;color: black;">
+                Feels like {{ weather['main']['feels_like'] }}°C
+            </div>
             <div class="details">
                 <div class="detail-item">
-{#                    <span class="label">Humidity:</span>#}
+                    {#                    <span class="label">Humidity:</span>#}
                     <span class="label">💧</span>
                     <span id="current-humidity">{{ weather['main']['humidity'] }}%</span>
                 </div>
                 <div class="detail-item">
-{#                    <span class="label">Wind Speed:</span>#}
+                    {#                    <span class="label">Wind Speed:</span>#}
                     <span class="label">💨</span>
                     <span id="current-wind">{{ weather['wind']['speed'] }} m/s</span>
                 </div>
@@ -120,13 +123,14 @@
             reserved
         </div>
         <div class="powered-by">
-            <span>Powered by Junie</span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 0L24 12L12 24L0 12L12 0Z" fill="#7B61FF"/>
-                <rect x="6" y="6" width="12" height="12" fill="black"/>
-                <rect x="8" y="8" width="5" height="1" fill="white"/>
-                <rect x="8" y="15" width="8" height="1" fill="white"/>
-            </svg>
+            <span>Powered by </span>
+            <img src="{{ url_for('static', filename='img/junie.jpg') }}" style="width: 50%;height: 30px;"  alt="junie"/>
+{#            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">#}
+{#                <path d="M12 0L24 12L12 24L0 12L12 0Z" fill="#7B61FF"/>#}
+{#                <rect x="6" y="6" width="12" height="12" fill="black"/>#}
+{#                <rect x="8" y="8" width="5" height="1" fill="white"/>#}
+{#                <rect x="8" y="15" width="8" height="1" fill="white"/>#}
+{#            </svg>#}
         </div>
     </footer>
 </div>
