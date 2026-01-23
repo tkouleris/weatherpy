@@ -1,118 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="content-wrapper" style="background-color: #808080;">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Weather at {{ title }}</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+    <section class="current-weather">
+        <div id="location-time" class="location-time">
+                    <span class="location">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        {{ weather['name'] }}
+                    </span>
+            <span class="separator">-</span>
+            <span class="time">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {{ weather['dt'] }}
+                    </span>
         </div>
-        <!-- /.content-header -->
 
-        <!-- Main content -->
-        <div class="content">
-            <div class="container">
-                <div class="row">
-{#                    <div class="col-lg-6">#}
-{#                        <div class="card">#}
-{#                            <div class="card-body">#}
-{#                                <a href="{{url_for('demo.index')}}?city=athens" class="btn" style="width: 100%;margin-bottom: 1px;background-color: white;border:1px dotted grey;">#}
-{#                                    Athens#}
-{#                                </a>#}
-{#                                <a href="{{url_for('demo.index')}}?city=london" class="btn" style="width: 100%;margin-bottom: 1px;background-color: white;border:1px dotted grey;">#}
-{#                                    London#}
-{#                                </a>#}
-{#                                <a href="{{url_for('demo.index')}}?city=paris" class="btn" style="width: 100%;margin-bottom: 1px;background-color: white;border:1px dotted grey;">#}
-{#                                    Paris#}
-{#                                </a>#}
-{#                                <a href="{{url_for('demo.index')}}?city=madrid" class="btn" style="width: 100%;margin-bottom: 1px;background-color: white;border:1px dotted grey;">#}
-{#                                    Madrid#}
-{#                                </a>#}
-{#                                <a href="{{url_for('demo.index')}}?city=milan" class="btn" style="width: 100%;margin-bottom: 2px;background-color: white;border:1px dotted grey;">#}
-{#                                    Milan#}
-{#                                </a>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-                    <div class="col-lg-6">
-                        <div class="card" style="background-color: #D3D3D3;">
-                            <div class="card-body">
-                                <h5 class="card-title"><small>{{ weather['dt'] }} (local)</small></h5><br/>
-                                <h5 class="card-title"><b>{{ weather['name'] }}</b> </h5><br/>
+        <div class="main-info">
 
-                                <div class="row" style="">
-                                    <div class="col-12">
-                                        {{ weather['weather'][0]['main'] }}, {{ weather['weather'][0]['description'] }}
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4"><img src="https://openweathermap.org/img/wn/{{ weather['weather'][0]['icon'] }}@2x.png" alt="icon"></div>
-                                    <div class="col-8" style="font-size: 40px;text-align: left;vertical-align: middle;">
-                                        {{ weather['main']['temp'] }}°C <br/>
-                                        <div class="row" style="font-size: 16px;">
-                                            Feels like {{ weather['main']['feels_like'] }}°C
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6"><b>Humidity:</b> {{ weather['main']['humidity'] }} %</div>
-                                    <div class="col-6"><b>Wind Speed:</b> {{ weather['wind']['speed'] }} m/s</div>
+            <img id="current-icon"
+                 src="https://openweathermap.org/img/wn/{{ weather['weather'][0]['icon'] }}@2x.png"
+                 alt="Weather Icon" class="large-icon">
+            <div id="current-temp" class="temp">{{ weather['main']['temp'] }}°C</div>
+        </div>
+        <div class="row" style="font-size: 12px;color: black;">
+            Feels like {{ weather['main']['feels_like'] }}°C
+        </div>
+        <div class="details">
+            <div class="detail-item">
+                {#                    <span class="label">Humidity:</span>#}
+                <span class="label">💧</span>
+                <span id="current-humidity">{{ weather['main']['humidity'] }}%</span>
+            </div>
+            <div class="detail-item">
+                {#                    <span class="label">Wind Speed:</span>#}
+                <span class="label">💨</span>
+                <span id="current-wind">{{ weather['wind']['speed'] }} m/s</span>
+            </div>
+        </div>
+        <div id="current-description" class="description">
+            {{ weather['weather'][0]['main'] }}, {{ weather['weather'][0]['description'] }}
+        </div>
+    </section>
+
+    <section class="forecast">
+        <h3>5-Day Forecast (Every 3 Hours)</h3>
+        <div id="forecast-timeline" class="timeline">
+            {% for day in custom_forecast %}
+                <div class="forecast-day-row">
+                    <h4>{{ day }}</h4>
+                    <div class="day-items">
+                        {% for data in custom_forecast[day] %}
+                            <div class="forecast-item">
+                                <div class="forecast-time">{{ data['time'] }}</div>
+                                <img src="https://openweathermap.org/img/wn/{{ data['icon'] }}.png" alt="icon"
+                                     class="forecast-icon">
+                                <div class="forecast-temp">{{ data['temp'] }}°C</div>
+                                <div class="forecast-description">{{ data['description'] }}</div>
+                                <div class="forecast-details">
+                                    <div>💧 {{ data['humidity'] }}%</div>
+                                    <div>💨 {{ data['wind_speed'] }}m/s</div>
                                 </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-
                 </div>
-                <hr/>
-                <div class="row">
-                    <div class="col-12"><h1>5 day / 3 hour forecast</h1></div>
-                </div>
-                <div class="row">
-                    {% for day in custom_forecast %}
-                        <div class="col-12">
-                            <div class="card" style="background-color: #D3D3D3;">
-                                <div class="card-header">
-                                    <h5 class="card-title m-0"><span style="font-size: 25px;font-weight: bold;">{{ day }}</span> </h5>
-                                </div>
-                                <div class="card-body">
-                                    <table width="100%" >
-                                    {% for data in custom_forecast[day] %}
-                                        <tr style="border-bottom: 1px solid black;text-align: center;">
-                                            <td>{{ data['time'] }} <i class="fa fa-clock"></i></td>
-                                            <td style="text-align: center;{{ data['temp_style'] }}"><i class="fa fa-temperature-high"></i> {{ data['temp'] }}°C</td>
-                                            <td><i class="fas fa-tint"></i> {{ data['humidity'] }}% </td>
-                                            <td><i class="fa fa-wind"></i> {{ data['wind_speed'] }}m/s</td>
-                                            <td>{{ data['description'] }}</td>
-                                            <td><img src="https://openweathermap.org/img/wn/{{ data['icon'] }}.png" alt="icon"></td>
-                                        </tr>
-                                    {% endfor %}
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+            {% endfor %}
         </div>
-        <!-- /.content -->
-    </div>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PWPHBBD1ZR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-PWPHBBD1ZR');
-</script>
+    </section>
 {% endblock %}

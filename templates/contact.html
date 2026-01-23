@@ -1,65 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Contact</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
-        <!-- Main content -->
-        <div class="content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        You can contact me via the following methods:<br/>
-                    </div>
+    <!-- Main content -->
+    <div class="content" style="margin-bottom: 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="m-0">Contact</h1>
+                    You can contact me via the following methods:<br/>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-12"><b>email:</b> tkouleris@gmail.com</div>
+            <div class="row">
+                <div class="col-12"><b>email:</b> tkouleris@gmail.com</div>
+            </div>
+            <div class="row">
+                <div class="col-12"><b>web:</b> <a target="_blank" class="generic-link" href="https://tkouleris.eu/">tkouleris.eu</a>
                 </div>
-                <div class="row">
-                    <div class="col-12"><b>web:</b> <a target="_blank" href="https://tkouleris.eu/">tkouleris.eu</a>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12"><b>blog:</b> <a target="_blank" class="generic-link"
+                                                    href="https://blog.tkouleris.eu/">blog.tkouleris.eu</a>
                 </div>
-                <div class="row">
-                    <div class="col-12"><b>blog:</b> <a target="_blank" href="https://blog.tkouleris.eu/">blog.tkouleris.eu</a>
-                    </div>
-                </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
 
-        <div class="content-header">
-            <div class="container">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Android App</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-12">
-                        You can download the .apk file to install the app on your phone from <a
-                            href="https://drive.google.com/file/d/181NUMECk5tEgMd3UCVX_gu79h6-x3Yju/view?usp=drive_link">here</a>
-                    </div>
-                    <div class="col-sm-12">
-                        <img src="{{ url_for('static', filename='dist/img/android/image_1.jpg') }}" alt="Android App"
-                             style="height: 500px;margin:10px;">
-                        <img src="{{ url_for('static', filename='dist/img/android/image_2.jpg') }}" alt="Android App"
-                             style="height: 500px;">
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
+    <div class="content-header">
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Android App</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-12">
+                    You can download the .apk file to install the app on your phone from <a class="generic-link"
+                                                                                            href="https://drive.google.com/file/d/181NUMECk5tEgMd3UCVX_gu79h6-x3Yju/view?usp=drive_link">here</a>
+                </div>
+                <div class="col-sm-12" style="margin-top: 20px;">
+                    <img src="{{ url_for('static', filename='dist/img/android/image_1.jpg') }}" alt="Android App"
+                         style="height: 500px;margin-left: 10px;margin-right: 10px;">
+                    <img src="{{ url_for('static', filename='dist/img/android/image_2.jpg') }}" alt="Android App"
+                         style="height: 500px;">
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
 {% endblock %}
-
